@@ -33,7 +33,7 @@ public class SecurityConfig {
 				"/v3/api-docs/**", 
 				"/webjars/**",
 				"/debug/context-path", 
-				"/api/jobseekers/**").permitAll().anyRequest().authenticated())
+				"/api/educationDetails/**").permitAll().anyRequest().authenticated())
 				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

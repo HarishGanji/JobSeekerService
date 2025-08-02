@@ -13,7 +13,7 @@ public class EducationDTO {
 
 	private UUID educationId;
 	private String level;
-    private String boardOrUniversity;
+    private String board;
     private String instituteName;
     private String yearOfPassing;
     private Double percentage;

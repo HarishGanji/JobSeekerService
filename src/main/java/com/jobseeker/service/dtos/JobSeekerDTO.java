@@ -18,7 +18,7 @@ public class JobSeekerDTO {
 	private UUID jobSeekerId;
 	private String fullName;
 	private String email;
-	private String password;
+	private String mobile;
 	private List<Experience> experience;
 	private List<Education> education;
 

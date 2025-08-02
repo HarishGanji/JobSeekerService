@@ -26,7 +26,7 @@ public class Education {
 	private UUID educationId;
 	
 	private String level;
-    private String boardOrUniversity;
+    private String board;
     private String instituteName;
     private String yearOfPassing;
     private Double percentage;
