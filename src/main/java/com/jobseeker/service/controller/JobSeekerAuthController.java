@@ -1,9 +1,5 @@
 package com.jobseeker.service.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +12,8 @@ import com.jobseeker.service.dtos.JobSeekerLoginRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerRegisterRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerResponseDTO;
 import com.jobseeker.service.service.JobSeekerService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/jobseekers/auth")
@@ -31,11 +29,11 @@ public class JobSeekerAuthController {
 //	@Autowired
 //    private JobSeekerRepository jobSeekerRepository;
 
-    @PostMapping("/register")
-    public ResponseEntity<JobSeekerResponseDTO> register(@RequestBody JobSeekerRegisterRequestDTO request) {
-    	JobSeekerResponseDTO response = jobSeekerService.registerJobSeeker(request);
-        return ResponseEntity.ok(response);
-    }
+	@PostMapping("/register")
+	public ResponseEntity<JobSeekerResponseDTO> register(@RequestBody @Valid JobSeekerRegisterRequestDTO request) {
+	    JobSeekerResponseDTO response = jobSeekerService.registerJobSeeker(request);
+	    return ResponseEntity.ok(response);
+	}
 
     @PostMapping("/login")
     public ResponseEntity<JobSeekerLogInResponseDTO> login(@RequestBody JobSeekerLoginRequestDTO request) {

@@ -11,6 +11,7 @@ import com.jobseeker.service.dtos.JobSeekerLogInResponseDTO;
 import com.jobseeker.service.dtos.JobSeekerLoginRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerRegisterRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerResponseDTO;
+import com.jobseeker.service.enums.Role;
 import com.jobseeker.service.mapper.JobSeekerMapper;
 import com.jobseeker.service.model.CustomUserDetails;
 import com.jobseeker.service.model.JobSeeker;
@@ -38,12 +39,25 @@ public class JobSeekerServiceImplementation implements JobSeekerService {
 
 	@Override
 	public JobSeekerResponseDTO registerJobSeeker(JobSeekerRegisterRequestDTO request) {
-		JobSeeker jobSeeker = JobSeeker.builder().fullName(request.getFullName()).email(request.getEmail())
-				.password(passwordEncoder.encode(request.getPassword())).build();
-		JobSeeker saved = jobRepo.save(jobSeeker);
-		return JobSeekerResponseDTO.builder().jobSeekerId(saved.getJobSeekerId()).fullName(saved.getFullName())
-				.email(saved.getEmail()).build();
+	    JobSeeker jobSeeker = JobSeeker.builder()
+	            .fullName(request.getFullName())
+	            .email(request.getEmail())
+	            .password(passwordEncoder.encode(request.getPassword()))
+	            .mobile(request.getMobile())
+	            .location(request.getLocation())
+	            .role(Role.ROLE_JOBSEEKER) // ✅ set role from request
+	            .build();
+
+	    JobSeeker saved = jobRepo.save(jobSeeker);
+
+	    return JobSeekerResponseDTO.builder()
+	            .jobSeekerId(saved.getJobSeekerId())
+	            .fullName(saved.getFullName())
+	            .email(saved.getEmail())
+	            .role(saved.getRole()) // ✅ include role in response
+	            .build();
 	}
+
 
 	@Override
 	public JobSeekerLogInResponseDTO login(JobSeekerLoginRequestDTO loginRequest) {
@@ -55,8 +69,8 @@ public class JobSeekerServiceImplementation implements JobSeekerService {
 		JobSeekerLogInResponseDTO jobSeekerResponse = new JobSeekerLogInResponseDTO();
 		jobSeekerResponse.setJobSeekerId(jobseeker.getJobSeekerId());
 		jobSeekerResponse.setToken(token);
-		jobSeekerResponse.setFullName(jobseeker.getFullName());
 		jobSeekerResponse.setEmail(jobseeker.getEmail());
+		jobSeekerResponse.setRole(jobseeker.getRole());
 		return jobSeekerResponse;
 
 	}
