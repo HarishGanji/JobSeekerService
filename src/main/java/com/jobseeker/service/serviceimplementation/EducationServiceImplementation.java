@@ -31,10 +31,9 @@ public class EducationServiceImplementation implements EducationService {
 
 	@Override
 	public EducationDTO addEducation(UUID jobSeekerId, Education education) throws JobSeekerNotFoundException {
-		JobSeeker jobSeeker = jobRepo.getJobSeekerById(jobSeekerId);
-		if (jobSeeker == null) {
-			throw new JobSeekerNotFoundException("JobSeeker not found with ID: " + jobSeekerId);
-		}
+		JobSeeker jobSeeker = jobRepo.findById(jobSeekerId)
+		        .orElseThrow(() -> new JobSeekerNotFoundException("JobSeeker not found with ID: " + jobSeekerId));
+
 		Education educat = new Education();
 		educat.setBoard(education.getBoard());
 		educat.setInstituteName(education.getInstituteName());
@@ -48,21 +47,20 @@ public class EducationServiceImplementation implements EducationService {
 
 	@Override
 	public List<EducationDTO> addEducationDetails(UUID jobSeekerId, List<EducationDTO> educationDtos) throws JobSeekerNotFoundException {
-		JobSeeker jobseeker = jobRepo.getJobSeekerById(jobSeekerId);
-		if (jobseeker == null) {
-			throw new JobSeekerNotFoundException("JobSeeker not found with ID: " + jobSeekerId);
-		}
+		JobSeeker jobSeeker = jobRepo.findById(jobSeekerId)
+		        .orElseThrow(() -> new JobSeekerNotFoundException("JobSeeker not found with ID: " + jobSeekerId));
+
 		List<Education> savedEducations = new ArrayList<>();
 
 		for (EducationDTO dto : educationDtos) {
 			Education ed = eduMapper.toEntity(dto);
-			ed.setJobSeeker(jobseeker);
+			ed.setJobSeeker(jobSeeker);
 //			savedEducations.add(eduRepo.save(ed));
 			eduRepo.save(ed);
 			savedEducations.add(ed);
 		}
 
-		jobseeker.getEducation().addAll(savedEducations);
+		jobSeeker.getEducation().addAll(savedEducations);
 		return savedEducations.stream().map(ed -> eduMapper.toDto(ed)).collect(Collectors.toList());
 	}
 

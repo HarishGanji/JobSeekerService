@@ -12,7 +12,7 @@ public interface EducationMapper {
 	
 	EducationDTO toDto(Education education);
 	
-    @Mapping(target = "jobSeeker", ignore = true)
+	@Mapping(target = "jobSeeker",ignore = true)
 	Education toEntity(EducationDTO education);
 	
 }

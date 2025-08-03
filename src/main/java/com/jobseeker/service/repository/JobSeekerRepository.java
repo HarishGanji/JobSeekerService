@@ -1,5 +1,6 @@
 package com.jobseeker.service.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,5 +18,9 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, UUID> {
 
 	@Query("SELECT j FROM JobSeeker j WHERE j.id = :JobSeekerId")
 	JobSeeker getJobSeekerById(@Param("JobSeekerId") UUID id);
+	
+	@Query("SELECT j FROM JobSeeker j")
+	List<JobSeeker> getAllJobSeekers();
+
 
 }

@@ -1,19 +1,12 @@
 package com.jobseeker.service.model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -21,19 +14,23 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Experience {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID experienceId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID experienceId;
 
-	private String jobTitle;
-	private String companyName;
-	private String location;
-	private String duration; 
-	private String description; 
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+    private String jobTitle;
+    private String companyName;
+    private String location;
+
+    private LocalDate startDate; // From
+    private LocalDate endDate;   // To — can be null if currently working
+
+    private boolean currentlyWorking; // true if currently working
+
+    private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "jobseeker_id")
-	@JsonIgnore
+    @JsonIgnore
     private JobSeeker jobSeeker;
-
 }

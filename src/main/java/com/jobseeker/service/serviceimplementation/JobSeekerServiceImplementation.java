@@ -1,26 +1,30 @@
 package com.jobseeker.service.serviceimplementation;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jobseeker.service.dtos.JobSeekerDTO;
 import com.jobseeker.service.dtos.JobSeekerLogInResponseDTO;
 import com.jobseeker.service.dtos.JobSeekerLoginRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerRegisterRequestDTO;
 import com.jobseeker.service.dtos.JobSeekerResponseDTO;
 import com.jobseeker.service.enums.Role;
+import com.jobseeker.service.exceptions.JobSeekerNotFoundException;
 import com.jobseeker.service.mapper.JobSeekerMapper;
 import com.jobseeker.service.model.CustomUserDetails;
 import com.jobseeker.service.model.JobSeeker;
 import com.jobseeker.service.repository.JobSeekerRepository;
 import com.jobseeker.service.security.JwtUtil;
-import com.jobseeker.service.service.JobSeekerService;
+import com.jobseeker.service.service.JobSeekerAuthService;
 
 @Service
-public class JobSeekerServiceImplementation implements JobSeekerService {
+public class JobSeekerServiceImplementation implements JobSeekerAuthService {
 
 	@Autowired
 	private JobSeekerRepository jobRepo;
@@ -74,5 +78,8 @@ public class JobSeekerServiceImplementation implements JobSeekerService {
 		return jobSeekerResponse;
 
 	}
+
+
+	
 
 }
