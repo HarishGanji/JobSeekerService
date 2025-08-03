@@ -35,7 +35,8 @@ public class SecurityConfig {
 			    "/webjars/**",
 			    "/api/educationDetails/**",
 				"/api/jobseekerdata/**",
-				"api/experience/**"
+				"/api/experience/**",
+				"/api/otpverification/**"
 			).permitAll().anyRequest().authenticated())
 				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -16,7 +16,7 @@ import com.jobseeker.service.dtos.ExperienceDTO;
 import com.jobseeker.service.service.ExperienceService;
 
 @RestController
-@RequestMapping("api/experience")
+@RequestMapping("/api/experience")
 public class ExperienceController {
 
 	@Autowired
